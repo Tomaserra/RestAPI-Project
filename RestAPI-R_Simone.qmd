@@ -1,0 +1,36 @@
+---
+title: "let's REST"
+subtitle: "Inside the world of RESTful APIs with Plumber"
+format:
+  revealjs: 
+    slide-number: true
+    chalkboard: 
+      buttons: false
+    preview-links: auto
+    logo: images/quarto.png
+    css: styles.css
+
+    footer: 'let''s REST a bit'
+resources:
+  - demo.pdf
+---
+
+## How softwares communicated before APIs?
+
+Communication between software was difficult before APIs, because:
+
+-   **No standard interface:** programs had to know each other's internal structure to communicate.
+
+-   **Incompatibility:** different languages, platforms, or data formats made integration hard.\
+
+-   **Fragile communication:** every connection required custom, error-prone code.
+
+## What is an API? {background-color=#ffe66d}
+
+> **API (Application Programming Interface):**\
+> An API, or application programming interface, is a set of rules or protocols that enables software applications to communicate with each other to exchange data, features and functionality.[^1]
+
+
+Most of the API's use the client-server paradigm
+
+[^1]: IBM Cloud, "What is an API?" <https://www.ibm.com/topics/api>
