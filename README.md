@@ -14,7 +14,7 @@ git commit -m "Describe what I changed"
 git push
 ```
 ## Adding a new file
-	1.	Create or save the new file inside the project folder (e.g., in RStudio).
+	1.	Create or save the new file inside the project folder.
 	2.	Then tell Git to track and upload it:
 ```bash
 git add newfile.qmd
