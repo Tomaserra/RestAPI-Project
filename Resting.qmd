@@ -1,0 +1,325 @@
+---
+title: "Reverse Class: REST APIs in Biomedical Informatics"
+author: "Marco, Tomás Serra, Simone"
+date: "2025-11-06"
+format:
+  revealjs:
+    theme: default
+    footer: "Biomedical Informatics: REST APIs with Plumber"
+    slide-number: true
+    scrollable: true
+    auto-stretch: false
+    smaller: true
+    transition: slide
+    slide-level: 2
+---
+
+## Contents
+
+1.  **Introduction to APIs**
+    *   What is an API?
+    *   Why are they crucial for Biomedical Informatics?
+    *   Enter REST: A common standard
+
+2.  **Core Principles of REST**
+    *   Resources and URIs
+    *   HTTP Methods (Verbs)
+    *   Request & Response Structure
+    *   Statelessness
+
+3.  **Building a REST API in R with `plumber`**
+    *   What is `plumber`?
+    *   Creating our first endpoint
+    *   Handling parameters
+
+4.  **Practical Example: A Gene Expression API**
+    *   Setting up the use case
+    *   Building the API step-by-step
+    *   Testing the API
+
+5.  **Discussion & Class Activity**
+    *   Interoperability in Health (FHIR)
+    *   Activity: Design your own biomedical API endpoint
+
+---
+
+## 1. Introduction to APIs
+
+### What is an API?
+
+An **API (Application Programming Interface)** is a set of rules and protocols that allows different software applications to communicate with each other.
+
+* It acts as an intermediary, taking requests from a client, fetching what's needed from a server or database, and returning a response.  
+* Think of it as a waiter in a restaurant: you (the client) don't go into the kitchen (the server); you give your order to the waiter (the API), who handles the rest.
+
+> "APIs are the contracts that govern how software components interact."
+
+---
+
+### Why are APIs crucial for Biomedical Informatics?
+
+Biomedical data is often stored in different systems, formats, and locations. APIs solve the challenge of **interoperability**.
+
+* **Data Integration**: Combine data from EHRs, public genetics databases (e.g., NCBI), and research datasets.  
+* **Model Deployment**: Expose predictive models (e.g., disease risk) as endpoints others can call.  
+* **Interoperability Standards**: Enable standardized data exchange (e.g., HL7 FHIR).  
+* **Automation**: Automate workflows like fetching clinical trial updates.
+
+---
+
+### Enter REST: A Common Standard
+
+**REST (REpresentational State Transfer)** is an architectural style for designing networked applications.  
+It’s not a protocol but a set of constraints for building scalable, simple, and reliable web services.
+
+* Uses standard HTTP methods  
+* The most common approach for building APIs on the web  
+
+**Advantages:**
+* **Simplicity** – Uses existing HTTP verbs  
+* **Scalability** – Stateless requests make scaling easy  
+* **Flexibility** – Returns data in many formats (mainly **JSON**)  
+
+---
+
+## 2. Core Principles of REST
+
+### Resources and URIs
+
+In REST, every piece of information is a **Resource** — patients, genes, lab results, etc.  
+Each resource is identified by a unique **URI (Uniform Resource Identifier)**.
+
+<div style="font-size:0.9em">
+
+| Resource | URI |
+|-----------|-----|
+| A specific patient | `/patients/12345` |
+| All lab results for that patient | `/patients/12345/lab-results` |
+| A specific gene | `/genes/TP53` |
+
+</div>
+
+---
+
+### HTTP Methods (Verbs)
+
+REST uses standard HTTP methods to perform actions on resources.
+
+<div style="font-size:0.9em">
+
+| Method | Action | SQL Analogy | Example URI |
+|--------|---------|--------------|--------------|
+| **GET** | Retrieve a resource | `SELECT` | `/patients/12345` |
+| **POST** | Create a resource | `INSERT` | `/patients` |
+| **PUT** | Update/replace | `UPDATE` | `/patients/12345` |
+| **DELETE** | Delete a resource | `DELETE` | `/patients/12345` |
+
+</div>
+
+---
+
+### Request & Response Structure
+
+A RESTful interaction follows a **Request → Response** cycle.
+
+**Client Request**:
+- **URI**: resource (e.g., `/genes/BRCA1`)  
+- **HTTP Method**: operation (e.g., `GET`)  
+- **Headers**: metadata (e.g., content type)  
+- **Body**: optional data for POST/PUT  
+
+**Server Response**:
+- **Status Code** (`200 OK`, `404 Not Found`)  
+- **Headers** (metadata)  
+- **Body** (usually JSON)
+
+<div style="font-size:0.85em">
+
+```json
+{
+  "gene": "BRCA1",
+  "full_name": "Breast Cancer Gene 1",
+  "chromosome": "17",
+  "summary": "Associated with hereditary breast and ovarian cancer."
+}
+```
+</div>
+
+---
+
+## 3. Building a REST API in R with `plumber`
+
+### What is `plumber`?
+
+`plumber` turns R functions into RESTful web services using simple comments.
+
+```{r, eval=FALSE}
+install.packages("plumber")
+library(plumber)
+```
+
+---
+
+### Creating Our First Endpoint
+
+<div style="font-size:0.85em">
+
+```{r, engine='cat', eval=TRUE}
+# api.R
+#* @apiTitle My First Plumber API
+#* @apiDescription A demo API.
+
+#* @get /hello
+function() {
+  list(message = "Hello, Biomedical Informatics student!")
+}
+```
+</div>
+
+`@get /hello` exposes this function via a GET request.
+
+---
+
+### Running the API
+
+```{r, eval=FALSE}
+pr <- plumber::pr("api.R")
+pr_run(pr, port = 8000)
+```
+
+Then visit:  
+**http://127.0.0.1:8000/hello**
+
+<div style="font-size:0.85em">
+
+```json
+{
+  "message": ["Hello, Biomedical Informatics student!"]
+}
+```
+</div>
+
+---
+
+### Handling Parameters
+
+<div style="font-size:0.85em">
+
+```{r, engine='cat', eval=TRUE}
+#* Calculate BMI from weight (kg) and height (m)
+#* @param weight:numeric
+#* @param height:numeric
+#* @get /bmi
+function(weight, height) {
+  bmi <- as.numeric(weight) / (as.numeric(height)^2)
+  list(weight_kg = weight, height_m = height, bmi = round(bmi, 2))
+}
+```
+</div>
+
+Example call:  
+`http://127.0.0.1:8000/bmi?weight=70&height=1.75`
+
+---
+
+## 4. Practical Example: A Gene Expression API
+
+### Setting up the Use Case
+
+Simulate a gene expression “database” in R.
+
+<div style="font-size:0.85em">
+
+```{r}
+gene_db <- data.frame(
+  gene_id = c("TP53", "BRCA1", "EGFR", "TNF", "IL6"),
+  expression = c(10.2, 8.5, 12.1, 7.3, 9.8),
+  log2FoldChange = c(1.5, -0.5, 2.1, -1.0, 1.2),
+  p_value = c(0.001, 0.04, 0.0001, 0.06, 0.02)
+)
+```
+</div>
+
+---
+
+### Building the API Step-by-Step
+
+<div style="font-size:0.8em">
+
+```{r, engine='cat', eval=TRUE}
+library(plumber)
+
+gene_db <- data.frame(
+  gene_id = c("TP53", "BRCA1", "EGFR", "TNF", "IL6"),
+  expression = c(10.2, 8.5, 12.1, 7.3, 9.8),
+  log2FoldChange = c(1.5, -0.5, 2.1, -1.0, 1.2),
+  p_value = c(0.001, 0.04, 0.0001, 0.06, 0.02)
+)
+
+#* @apiTitle Gene Expression API
+#* @get /expression
+function(gene = "") {
+  if (gene == "") return(list(error = "Please provide a gene parameter."))
+  result <- subset(gene_db, gene_id == toupper(gene))
+  if (nrow(result) == 0) return(list(error = paste("Gene", gene, "not found.")))
+  result
+}
+```
+</div>
+
+---
+
+### Testing the API
+
+```{r, eval=FALSE}
+pr <- plumber::pr("gene_api.R")
+pr_run(pr, port = 8000)
+```
+
+**Example queries:**
+- `/expression?gene=TP53`  
+- `/expression?gene=XYZ` → returns 404 error  
+- `/all_genes` → returns full dataset  
+
+---
+
+## 5. Discussion & Class Activity
+
+### Interoperability in Health: FHIR
+
+**FHIR (Fast Healthcare Interoperability Resources)** is a healthcare standard built on REST principles.
+
+* Uses RESTful APIs to exchange clinical data.  
+* Defines standardized “Resources” like `Patient`, `Observation`, `Encounter`.  
+* Example: `GET /Patient/123` retrieves a patient’s data as JSON.  
+
+This is a real-world REST API in healthcare.
+
+---
+
+## Class Activity (10 min)
+
+**Goal:** Design a REST API for a biomedical use case.
+
+Steps:
+1. Form small groups.  
+2. Pick a use case — e.g. drug interaction checker, disease trial finder, protein data retriever.  
+3. Define your endpoint:  
+   - URI (e.g., `/trials`, `/check-interaction`)  
+   - HTTP method (`GET`, `POST`, etc.)  
+   - Parameters  
+   - JSON output for success/error  
+
+Be ready to share your endpoint idea with the class!
+
+---
+
+### Thank you!
+
+**Questions?**
+
+**References & Further Reading:**
+- Plumber Documentation: [www.rplumber.io](https://www.rplumber.io/)  
+- REST API Tutorial: [restfulapi.net](https://restfulapi.net/)  
+- HL7 FHIR Documentation: [www.hl7.org/fhir/](https://www.hl7.org/fhir/)  
+- OpenFDA API: [open.fda.gov/apis/](https://open.fda.gov/apis/)
