@@ -28,12 +28,20 @@ git commit -m "Add new files"
 git push
 ```
 
+
 ## Starting work on another day
 Before doing anything:
 ```bash
 cd /path/to/your/project
 git pull
 ```
+Tomás:
+```bash
+cd /Users/tomas_serra/Desktop/Mebiom/5th year/Erasmus/Erasmus Classes/Biomedical Informatics/RestAPI
+git pull
+```
+
+
 Then, after editing:
 ```bash
 git add .
