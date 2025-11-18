@@ -29,18 +29,34 @@ format:
 
 ## API Metaphor: The Restaurant Analogy
 
+::: columns
+
+::: column
 Imagine you’re in a restaurant placing an order.
 
-- You are the **client**
-- The kitchen is the **server**
+- You are the **client**  
+- The kitchen is the **server**  
 - The waiter is the **API**
+:::
 
-The waiter:
+::: column
+<div style="text-align: center;">
+  <img src="images/Clientserver.png" 
+       alt="API Restaurant Metaphor" 
+       style="width: 90%; max-height: 80vh; object-fit: contain; border-radius: 8px;">
+</div>
+:::
+
+**The waiter:**
+
 - Takes your request  
 - Delivers it to the kitchen  
 - Brings the response  
 
 Just like APIs standardize communication between software systems.
+
+:::
+
 
 
 
