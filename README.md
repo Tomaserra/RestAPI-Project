@@ -37,7 +37,7 @@ git pull
 ```
 Tomás:
 ```bash
-cd /Users/tomas_serra/Desktop/Mebiom/5th year/Erasmus/Erasmus Classes/Biomedical Informatics/RestAPI
+cd /Users/tomas_serra/Documents/GitHub/RestAPI-Project
 git pull
 ```
 
