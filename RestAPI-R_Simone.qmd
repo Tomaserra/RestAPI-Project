@@ -1,18 +1,81 @@
 ---
 title: "let's REST"
 subtitle: "Inside the world of RESTful APIs with Plumber"
+author: "Marco, Tomás Serra, Simone"
+date: "2025-11-06"
 format:
-  revealjs: 
+  revealjs:
+    theme: default
+    footer: "Biomedical Informatics: REST APIs with Plumber"
     slide-number: true
-    chalkboard: 
-      buttons: false
-    preview-links: auto
-    logo: images/quarto.png
-    css: styles.css
+    scrollable: true
+    auto-stretch: false
+    smaller: true
+    transition: slide
+    slide-level: 2
+---
 
-    footer: 'let''s REST a bit'
-resources:
-  - demo.pdf
+# Contents
+
+1. Introduction to APIs  
+2. Core Principles of REST  
+3. Building REST APIs with plumber  
+4. Practical Gene Expression API  
+5. Discussion & Activity  
+
+
+
+# 1. Introduction to APIs
+
+## API Metaphor: The Restaurant Analogy
+
+Imagine you’re in a restaurant placing an order.
+
+- You are the **client**
+- The kitchen is the **server**
+- The waiter is the **API**
+
+The waiter:
+- Takes your request  
+- Delivers it to the kitchen  
+- Brings the response  
+
+Just like APIs standardize communication between software systems.
+
+
+
+## Why APIs Matter (Metaphor Continued)
+
+Without a waiter:
+- You’d walk into the kitchen  
+- Learn how it works  
+- Coordinate with others cooking  
+
+→ chaotic, inefficient, error-prone.
+
+APIs fix this by:
+- defining a predictable interface  
+- standardizing requests & responses  
+- allowing many clients to interact safely  
+
+---
+
+## Before APIs: “Ad-hoc Communication”
+
+Before APIs, programs communicated through:
+- manual file transfers  
+- custom scripts  
+- system-specific connections  
+
+Each program had to understand the internal details of others.
+
+Problems:
+- high maintenance  
+- fragile pipelines  
+- incompatible systems  
+
+APIs solved this with standardized interfaces.
+
 ---
 
 ## How softwares communicated before APIs?
@@ -25,6 +88,114 @@ Communication between software was difficult before APIs, because:
 
 -   **Fragile communication:** every connection required custom, error-prone code.
 
+---
+
+## Client–Server Paradigm
+
+Most interactions on the internet follow:
+
+1. **Client sends request**  
+2. **Server processes**  
+3. **Server returns response**
+
+Examples:
+- loading a webpage  
+- querying a hospital database  
+- retrieving sequencing results  
+
+The client never interacts directly with raw data storage — only through an interface.
+
+---
+
+## Client–Server in Biomedical Context
+
+Examples:
+
+- Viewing imaging results  
+- Accessing EHR data  
+- Requesting expression tables  
+
+Client = browser/app  
+Server = hospital system, cloud service, or research database  
+
+APIs allow secure, controlled, reproducible access.
+
+---
+
+## Resources & URIs
+
+APIs expose **resources** identified by **URIs**.
+
+Examples:
+
+| Action | URI |
+|-------|-----|
+| Retrieve patient 123 | `/patients/123` |
+| Retrieve BRCA1 | `/genes/BRCA1` |
+| Add expression entry | `POST /expression` |
+
+REST formalizes how these resources are structured.
+
+---
+
+## HTTP Methods & Request/Response
+
+REST uses standard HTTP verbs:
+
+- **GET** → retrieve  
+- **POST** → create  
+- **PUT** → update  
+- **DELETE** → delete  
+
+Example:
+
+**Request:**  
+`GET /genes/BRCA1`
+
+**Response:**
+
+```json
+{
+  "gene": "BRCA1",
+  "expression": 42.7,
+  "unit": "TPM"
+}
+```
+
+
+# 2. Core Principles of REST
+
+## What is REST?
+
+REST = **Representational State Transfer**
+
+- **Representational**: send data as JSON/XML  
+- **State**: current information of a resource  
+- **Transfer**: exchanged via HTTP  
+
+REST ensures:
+- consistent URLs  
+- predictable methods  
+- structured responses  
+
+---
+
+## What is an API (REST context)?
+
+An API defines:
+- **what requests clients can make**  
+- **how the server responds**  
+- **how to structure the request**  
+
+Examples:
+
+`GET /patients/123`  
+`POST /expression`  
+
+APIs hide internal complexity and expose only the interface.
+
+---
+
 ## What is an API? {background-color=#ffe66d}
 
 > **API (Application Programming Interface):**\
@@ -34,3 +205,224 @@ Communication between software was difficult before APIs, because:
 Most of the API's use the client-server paradigm
 
 [^1]: IBM Cloud, "What is an API?" <https://www.ibm.com/topics/api>
+
+---
+
+## Statelessness & Error Handling
+
+REST APIs are **stateless**:
+- each request contains all needed info  
+- server stores no session history  
+
+This makes APIs scalable.
+
+Standard error codes:
+
+- **200 OK**  
+- **404 Not Found**  
+- **500 Internal Server Error**  
+
+---
+
+## Error Example in plumber
+
+```r
+#* @get /gene
+function(name = "BRCA1") {
+  if (name == "") 
+    return(list(error = "No gene provided", status = 400))
+
+  list(
+    gene = name,
+    expression = runif(1, 0, 100)
+  )
+}
+```
+
+Clients can react automatically based on status.
+
+
+
+# 3. Building REST APIs with plumber
+
+## What is plumber?
+
+`plumber` allows R functions to become API endpoints with simple annotations.
+
+Example:
+
+```r
+#* @get /hello
+function() {
+  list(message = "Hello World")
+}
+```
+
+A complete API with just one comment.
+
+---
+
+## Creating the First Endpoint
+
+```r
+library(plumber)
+
+#* @get /hello
+function() {
+  list(message = "Hello World")
+}
+```
+
+Calling `/hello` returns:
+
+```json
+{"message": "Hello World"}
+```
+
+---
+
+## Handling Parameters
+
+```r
+#* @get /gene
+function(name = "BRCA1") {
+  list(
+    gene = name,
+    expression = runif(1, 0, 100)
+  )
+}
+```
+
+Calling `/gene?name=TP53` returns:
+
+```json
+{"gene": "TP53", "expression": 57.2}
+```
+
+---
+
+## Why REST APIs Are Crucial for Biomedical Informatics
+
+REST APIs allow:
+
+- interoperability  
+- reproducible pipelines  
+- automated workflows  
+- multi-language access (R, Python, dashboards…)
+
+Without APIs → manual work & error-prone sharing  
+With APIs → safe and consistent data exchange  
+
+
+
+# 4. Practical Gene Expression API
+
+## Use Case
+
+Problem:
+Researchers need consistent access to gene expression data.
+
+Typical workflow:
+- spreadsheets  
+- copy/paste  
+- manual errors  
+
+REST API workflow:
+`/expression?gene=BRCA1`  
+→ clean, machine-readable, automatable.
+
+---
+
+## Building the API (GET)
+
+```r
+library(plumber)
+
+#* @get /expression
+function(gene = "BRCA1") {
+  list(
+    gene = gene,
+    expression = runif(1, 0, 100)
+  )
+}
+```
+
+---
+
+## Building the API (POST)
+
+```r
+#* @post /expression
+function(gene, value) {
+  list(
+    status = "success",
+    gene = gene,
+    value = value
+  )
+}
+```
+
+GET = retrieve data  
+POST = submit new data  
+
+---
+
+## Testing the API
+
+Using curl:
+
+```bash
+curl "http://localhost:8000/expression?gene=TP53"
+```
+
+Response:
+
+```json
+{"gene":"TP53","expression":57.2}
+```
+
+Testing ensures correctness, reproducibility and reliability.
+
+---
+
+# 5. Discussion & Activity
+
+## Interoperability in Health: FHIR
+
+FHIR is a REST-based standard for health data.
+
+FHIR defines:
+- resources like **Patient**, **Observation**, **Encounter**  
+- endpoints like `/Patient/123`  
+
+Built directly from REST principles.
+
+---
+
+## Class Activity
+
+Design an API endpoint:
+
+1. Define a biomedical use case  
+2. Create:
+   - URI  
+   - HTTP method  
+   - parameters  
+   - JSON response  
+
+Example topics:
+- drug interaction checker  
+- protein info lookup  
+- clinical trial search  
+
+---
+
+# Thank You!
+
+Questions?
+
+**References**  
+- Plumber: https://www.rplumber.io  
+- REST Tutorial: https://restfulapi.net  
+- FHIR: https://www.hl7.org/fhir/  
+- OpenFDA: https://open.fda.gov/apis/  
