@@ -13,6 +13,8 @@ format:
     smaller: true
     transition: slide
     slide-level: 2
+    center-title-slide: true    # title slide centered
+css: styles.css
 ---
 
 # Contents
@@ -23,89 +25,92 @@ format:
 4. Practical Gene Expression API  
 5. Discussion & Activity  
 
-
-
 # 1. Introduction to APIs
 
 ## API Metaphor: The Restaurant Analogy
 
+::: columns
+
+::: column
 Imagine you’re in a restaurant placing an order.
 
-- You are the **client**
-- The kitchen is the **server**
-- The waiter is the **API**
+- You are the *client*  
+- The kitchen is the *server*  
+- The waiter is the *API*
+:::
 
-The waiter:
-- Takes your request  
-- Delivers it to the kitchen  
-- Brings the response  
+::: column
+<div class="center-figure">
+  ![](images/Clientserver.jpg){width="90%"}
+</div>
+:::
 
-Just like APIs standardize communication between software systems.
+:::
 
+## What would happen without the waiter?
 
-
-## Why APIs Matter (Metaphor Continued)
-
-Without a waiter:
-- You’d walk into the kitchen  
-- Learn how it works  
-- Coordinate with others cooking  
-
-→ chaotic, inefficient, error-prone.
-
-APIs fix this by:
-- defining a predictable interface  
-- standardizing requests & responses  
-- allowing many clients to interact safely  
+- <span class="fragment">**No standard communication:** clients talk directly to the kitchen</span>  
+- <span class="fragment">**Chaotic & inefficient:** many clients at once</span>  
+- <span class="fragment">**Complex clients:** each must know kitchen internals</span>  
+- <span class="fragment">**Error-prone:** high chance of mistakes</span>
 
 ---
 
 ## Before APIs: “Ad-hoc Communication”
 
-Before APIs, programs communicated through:
-- manual file transfers  
-- custom scripts  
-- system-specific connections  
+- Programs communicated through:
+  - Manual file transfers  
+  - Custom scripts  
+  - System-specific connections  
 
-Each program had to understand the internal details of others.
+This led to a **core problem**:
 
-Problems:
-- high maintenance  
-- fragile pipelines  
-- incompatible systems  
+--- 
 
-APIs solved this with standardized interfaces.
+<div style="color:#e74c3c; font-size:2em; text-align:center; font-weight:bold; line-height:1.5em; margin:2em 0;"> ❗ Each program had to know the internal details of others — leading to high maintenance, fragile development pipelines, and incompatible systems. ❗ </div>
 
----
+--- 
 
-## How softwares communicated before APIs?
+<div style="color:#27ae60; font-size:2em; text-align:center; font-weight:bold; line-height:1.5em; margin:2em 0;"> APIs: Standardized interfaces for predictable, scalable, and reliable communication </div> ---
 
-Communication between software was difficult before APIs, because:
+--- 
 
--   **No standard interface:** programs had to know each other's internal structure to communicate.
+## How APIs solve this
 
--   **Incompatibility:** different languages, platforms, or data formats made integration hard.\
+- <span class="fragment">Standard interface — clients don’t need internals</span>  
+- <span class="fragment">Predictable requests/responses</span>  
+- <span class="fragment">Scalable: many clients, one server</span>  
+- <span class="fragment">Reliable: fewer errors, easier maintenance</span>
 
--   **Fragile communication:** every connection required custom, error-prone code.
 
----
+## Client–Server Paradigm {background-color=#E4FFF6}
 
-## Client–Server Paradigm
+::: columns
 
+::: column
 Most interactions on the internet follow:
 
 1. **Client sends request**  
 2. **Server processes**  
 3. **Server returns response**
+:::
 
-Examples:
-- loading a webpage  
-- querying a hospital database  
-- retrieving sequencing results  
+::: column
+<div style="text-align: center;">
+  <img src="images/Client-Server-Model.png" 
+       alt="API Restaurant Metaphor" 
+       style="width: 90%; max-height: 80vh; object-fit: contain; border-radius: 8px;">
+</div>
+:::
+
+**Examples:**
+
+- Loading a webpage  
+- Querying a hospital database  
+- Retrieving sequencing results  
 
 The client never interacts directly with raw data storage — only through an interface.
-
----
+:::
 
 ## Client–Server in Biomedical Context
 

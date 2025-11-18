@@ -97,6 +97,7 @@
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="RestAPI-R_Simone_files/libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link rel="stylesheet" href="styles.css">
   <link href="RestAPI-R_Simone_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="RestAPI-R_Simone_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="RestAPI-R_Simone_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -230,50 +231,79 @@ Marco, Tomás Serra, Simone
 </section>
 <section id="api-metaphor-the-restaurant-analogy" class="slide level2">
 <h2>API Metaphor: The Restaurant Analogy</h2>
+<div class="columns">
+<div class="column">
 <p>Imagine you’re in a restaurant placing an order.</p>
 <ul>
-<li>You are the <strong>client</strong></li>
-<li>The kitchen is the <strong>server</strong></li>
-<li>The waiter is the <strong>API</strong></li>
+<li>You are the <em>client</em><br>
+</li>
+<li>The kitchen is the <em>server</em><br>
+</li>
+<li>The waiter is the <em>API</em></li>
 </ul>
-<p>The waiter: - Takes your request<br>
-- Delivers it to the kitchen<br>
-- Brings the response</p>
-<p>Just like APIs standardize communication between software systems.</p>
+</div><div class="column">
+<div class="center-figure">
+<p><img data-src="images/Clientserver.jpg" style="width:90.0%"></p>
+</div>
+</div></div>
 </section>
-<section id="why-apis-matter-metaphor-continued" class="slide level2">
-<h2>Why APIs Matter (Metaphor Continued)</h2>
-<p>Without a waiter: - You’d walk into the kitchen<br>
-- Learn how it works<br>
-- Coordinate with others cooking</p>
-<p>→ chaotic, inefficient, error-prone.</p>
-<p>APIs fix this by: - defining a predictable interface<br>
-- standardizing requests &amp; responses<br>
-- allowing many clients to interact safely</p>
+<section id="what-would-happen-without-the-waiter" class="slide level2">
+<h2>What would happen without the waiter?</h2>
+<ul>
+<li><span class="fragment"><strong>No standard communication:</strong> clients talk directly to the kitchen</span><br>
+</li>
+<li><span class="fragment"><strong>Chaotic &amp; inefficient:</strong> many clients at once</span><br>
+</li>
+<li><span class="fragment"><strong>Complex clients:</strong> each must know kitchen internals</span><br>
+</li>
+<li><span class="fragment"><strong>Error-prone:</strong> high chance of mistakes</span></li>
+</ul>
 </section>
 <section id="before-apis-ad-hoc-communication" class="slide level2">
 <h2>Before APIs: “Ad-hoc Communication”</h2>
-<p>Before APIs, programs communicated through: - manual file transfers<br>
-- custom scripts<br>
-- system-specific connections</p>
-<p>Each program had to understand the internal details of others.</p>
-<p>Problems: - high maintenance<br>
-- fragile pipelines<br>
-- incompatible systems</p>
-<p>APIs solved this with standardized interfaces.</p>
-</section>
-<section id="how-softwares-communicated-before-apis" class="slide level2">
-<h2>How softwares communicated before APIs?</h2>
-<p>Communication between software was difficult before APIs, because:</p>
 <ul>
-<li><p><strong>No standard interface:</strong> programs had to know each other’s internal structure to communicate.</p></li>
-<li><p><strong>Incompatibility:</strong> different languages, platforms, or data formats made integration hard.<br>
-</p></li>
-<li><p><strong>Fragile communication:</strong> every connection required custom, error-prone code.</p></li>
+<li>Programs communicated through:
+<ul>
+<li>Manual file transfers<br>
+</li>
+<li>Custom scripts<br>
+</li>
+<li>System-specific connections</li>
+</ul></li>
+</ul>
+<p>This led to a <strong>core problem</strong>:</p>
+</section>
+<section class="slide level2">
+
+<div style="color:#e74c3c; font-size:2em; text-align:center; font-weight:bold; line-height:1.5em; margin:2em 0;">
+❗ Each program had to know the internal details of others — leading to high maintenance, fragile development pipelines, and incompatible systems. ❗
+</div>
+</section>
+<section class="slide level2">
+
+<div style="color:#27ae60; font-size:2em; text-align:center; font-weight:bold; line-height:1.5em; margin:2em 0;">
+APIs: Standardized interfaces for predictable, scalable, and reliable communication
+</div>
+</section>
+<section class="slide level2">
+
+</section>
+<section id="how-apis-solve-this" class="slide level2">
+<h2>How APIs solve this</h2>
+<ul>
+<li><span class="fragment">Standard interface — clients don’t need internals</span><br>
+</li>
+<li><span class="fragment">Predictable requests/responses</span><br>
+</li>
+<li><span class="fragment">Scalable: many clients, one server</span><br>
+</li>
+<li><span class="fragment">Reliable: fewer errors, easier maintenance</span></li>
 </ul>
 </section>
-<section id="clientserver-paradigm" class="slide level2 scrollable">
+<section id="clientserver-paradigm" class="slide level2 scrollable" data-background-color="#E4FFF6">
 <h2>Client–Server Paradigm</h2>
+<div class="columns">
+<div class="column">
 <p>Most interactions on the internet follow:</p>
 <ol type="1">
 <li><strong>Client sends request</strong><br>
@@ -282,10 +312,18 @@ Marco, Tomás Serra, Simone
 </li>
 <li><strong>Server returns response</strong></li>
 </ol>
-<p>Examples: - loading a webpage<br>
-- querying a hospital database<br>
-- retrieving sequencing results</p>
-<p>The client never interacts directly with raw data storage — only through an interface.</p>
+</div><div class="column">
+<div style="text-align: center;">
+<p><img src="images/Client-Server-Model.png" alt="API Restaurant Metaphor" style="width: 90%; max-height: 80vh; object-fit: contain; border-radius: 8px;"></p>
+</div>
+</div><p><strong>Examples:</strong></p><ul>
+<li>Loading a webpage<br>
+</li>
+<li>Querying a hospital database<br>
+</li>
+<li>Retrieving sequencing results</li>
+</ul><p>The client never interacts directly with raw data storage — only through an interface.</p>
+</div>
 </section>
 <section id="clientserver-in-biomedical-context" class="slide level2">
 <h2>Client–Server in Biomedical Context</h2>
