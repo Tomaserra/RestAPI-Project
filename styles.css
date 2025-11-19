@@ -1,2 +1,24 @@
 /* styles.css */
 
+/* Problem block - large, red, centered */
+.problem-block {
+  color: #e74c3c; /* rosso acceso */
+  font-weight: 700;
+  text-align: center;
+  margin: 6vh 2rem;
+  line-height: 1.5em;
+}
+
+/* Solution block - large, green, centered */
+.solution-block {
+  color: #27ae60; /* verde brillante */
+  font-weight: 700;
+  text-align: center;
+  margin: 6vh 2rem;
+  line-height: 1.5em;
+}
+
+/* fit-text auto resize handled by reveal.js */
+.r-fit-text {
+  display: block;
+}
