@@ -8,305 +8,448 @@ format:
     theme: theme.scss
     transition: fade
     background-transition: fade
-    highlight-style: ayu-mirage
 code-link: true
 execute:
   echo: true
   freeze: auto
-
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 # Contents
 
-1. Introduction to APIs  
-2. Core Concepts: Resources, URIs, and HTTP
-2. Core Principles of REST  
-3. Building REST APIs with plumber  
-4. Practical Gene Expression API  
-5. Discussion & Activity  
+1.  Introduction to APIs\
+2.  Core Concepts: Resources, URIs, and HTTP
+3.  Core Principles of REST\
+4.  Building REST APIs with plumber\
+5.  Practical Gene Expression API\
+6.  Discussion & Activity
 
 # 1. Introduction to APIs
 
 ## API Metaphor: The Restaurant Analogy
 
-::: columns
-
+:::::: columns
 ::: column
 Imagine you’re in a restaurant placing an order.
 
-- You are the *client*  
-- The kitchen is the *server*  
-- The waiter is the *API*
+-   You are the *client*\
+-   The kitchen is the *server*\
+-   The waiter is the *API*
 :::
 
-::: column
-<div class="center-figure">
-  ![](images/Clientserver.jpg){width="90%"}
-</div>
+:::: column
+::: center-figure
+![](images/Clientserver.jpg){width="90%"}
 :::
-
-:::
+::::
+::::::
 
 ## What would happen without the waiter?
 
-- <span class="fragment">**No standard communication:** clients talk directly to the kitchen</span>  
-- <span class="fragment">**Chaotic & inefficient:** many clients at once</span>  
-- <span class="fragment">**Complex clients:** each must know kitchen internals</span>  
-- <span class="fragment">**Error-prone:** high chance of mistakes</span>
+-   [**No standard communication:** clients talk directly to the
+    kitchen]{.fragment}\
+-   [**Chaotic & inefficient:** many clients at once]{.fragment}\
+-   [**Complex clients:** each must know kitchen internals]{.fragment}\
+-   [**Error-prone:** high chance of mistakes]{.fragment}
 
----
+------------------------------------------------------------------------
 
 ## Before APIs: “Ad-hoc Communication”
 
-- Programs communicated through:
-  - Manual file transfers  
-  - Custom scripts  
-  - System-specific connections  
+-   Programs communicated through:
+    -   Manual file transfers\
+    -   Custom scripts\
+    -   System-specific connections
 
 This led to a **core problem**:
 
+------------------------------------------------------------------------
 
---- 
+##  {background-color="#e74c3c"}
 
-## {background-color="#e74c3c"}
+::: {style="display:flex; height:100vh; justify-content:center; align-items:center; text-align:center; font-size:1.25em; font-weight:bold; color:white;"}
+! Each program had to know the internal details of others - leading to
+high maintenance, fragile development pipelines, and incompatible
+systems !
+:::
 
-<div style="display:flex; height:100vh; justify-content:center; align-items:center; text-align:center; font-size:1.25em; font-weight:bold; color:white;">
-! Each program had to know the internal details of others - leading to high maintenance, fragile development pipelines, and incompatible systems !
-</div>
+------------------------------------------------------------------------
 
+##  {background-color="#27ae60"}
 
----
+::: {style="display:flex; height:100vh; justify-content:center; align-items:center; text-align:center; font-size:1.25em; font-weight:bold; color:white;"}
+APIs: Standardized interfaces for predictable, scalable, and reliable
+communication !
+:::
 
-## {background-color="#27ae60"}
-
-<div style="display:flex; height:100vh; justify-content:center; align-items:center; text-align:center; font-size:1.25em; font-weight:bold; color:white;">
-APIs: Standardized interfaces for predictable, scalable, and reliable communication !
-</div>
-
-
---- 
+------------------------------------------------------------------------
 
 ## How APIs solve this
 
-- <span class="fragment">Standard interface — clients don’t need internals</span>  
-- <span class="fragment">Predictable requests/responses</span>  
-- <span class="fragment">Scalable: many clients, one server</span>  
-- <span class="fragment">Reliable: fewer errors, easier maintenance</span>
-
+-   [Standard interface — clients don’t need internals]{.fragment}\
+-   [Predictable requests/responses]{.fragment}\
+-   [Scalable: many clients, one server]{.fragment}\
+-   [Reliable: fewer errors, easier maintenance]{.fragment}
 
 # 2. Core Concepts: Client–Server, Resources, URIs, and HTTP
 
+## Client–Server Paradigm {background-color="#E4FFF6"}
 
-## Client–Server Paradigm {background-color=#E4FFF6}
-
-::: columns
-
+:::::: columns
 ::: column
 Most interactions on the internet follow:
 
-1. **Client sends request**  
-2. **Server processes**  
-3. **Server returns response**
+1.  **Client sends request**\
+2.  **Server processes**\
+3.  **Server returns response**
 :::
 
-::: column
-<div style="text-align: center;">
-  <img src="images/Client-Server-Model.png" 
+:::: column
+::: {style="text-align: center;"}
+```{=html}
+<img src="images/Client-Server-Model.png" 
        alt="API Restaurant Metaphor" 
        style="width: 90%; max-height: 80vh; object-fit: contain; border-radius: 8px;">
-</div>
+```
 :::
+::::
 
-> The client never interacts directly with raw data storage - only through an interface!
-:::
+> The client never interacts directly with raw data storage - only
+> through an interface!
+::::::
 
----
+------------------------------------------------------------------------
 
-## Client–Server Paradigm {background-color=#E4FFF6}
+## Client–Server Paradigm {background-color="#E4FFF6"}
 
 **Examples:**
 
-- Loading a webpage  
-- Querying a hospital database  
-- Retrieving sequencing results  
+-   Loading a webpage\
+-   Querying a hospital database\
+-   Retrieving sequencing results
 
-> The client never interacts directly with raw data storage - only through an interface!
-
+> The client never interacts directly with raw data storage - only
+> through an interface!
 
 ## Client–Server in Biomedical Context
 
 Examples:
 
-- Viewing imaging results  
-- Accessing EHR data  
-- Requesting expression tables  
+-   Viewing imaging results\
+-   Accessing EHR data\
+-   Requesting expression tables
 
-Client = browser/app  
-Server = hospital system, cloud service, or research database  
+Client = browser/app\
+Server = hospital system, cloud service, or research database
 
 APIs allow secure, controlled, reproducible access.
 
----
+------------------------------------------------------------------------
 
-## Resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate="true"}
 
-The first explicit definition of a resource is found in RFC 2396, in August 1998:
+The first explicit definition of a resource is found in RFC 2396, in
+August 1998:
 
-> The resource is the conceptual mapping to an entity or set of entities, not necessarily the entity which corresponds to that mapping at any particular instance in time.
+> The resource is the conceptual mapping to an entity or set of
+> entities, not necessarily the entity which corresponds to that mapping
+> at any particular instance in time.
 
-::: {.aside}
-**Reference:**  
-Fielding, R., & Berners-Lee, T. (1998). *RFC 2396: Uniform Resource Identifiers (URI): Generic Syntax*.  
-[https://www.rfc-editor.org/rfc/rfc2396](https://www.rfc-editor.org/rfc/rfc2396)
+::: aside
+**Reference:**\
+Fielding, R., & Berners-Lee, T. (1998). *RFC 2396: Uniform Resource
+Identifiers (URI): Generic Syntax*.\
+<https://www.rfc-editor.org/rfc/rfc2396>
 :::
 
----
+------------------------------------------------------------------------
 
-## Resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate="true"}
 
-> The **resource** is the **conceptual mapping to an entity or set of entities**, not necessarily the entity which corresponds to that mapping at any particular instance in time.
+> The **resource** is the **conceptual mapping to an entity or set of
+> entities**, not necessarily the entity which corresponds to that
+> mapping at any particular instance in time.
 
-**Example:**  
-We can have a file `Report.pdf` at the beginning, and its content might change over time.  
-The **resource** itself remains the same, even if the data inside changes.
+**Example:**\
+We can have a file `Report.pdf` at the beginning, and its content might
+change over time.\
+The **resource** itself remains the same, even if the data inside
+changes.
 
----
+------------------------------------------------------------------------
 
-## Resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate="true"}
 
-> The **resource** is the **conceptual mapping to an entity or set of entities**, not necessarily the entity which corresponds to that mapping at any particular instance in time.
+> The **resource** is the **conceptual mapping to an entity or set of
+> entities**, not necessarily the entity which corresponds to that
+> mapping at any particular instance in time.
 
-In other words:  
-- The **resource** is the **concept** of an entity.  
+In other words:\
+- The **resource** is the **concept** of an entity.\
 - The **entity** is the **real object** or concrete data behind it.
 
----
+------------------------------------------------------------------------
 
-## Resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate="true"}
 
+Each resource should be **identifiable** via a **Uniform Resource
+Identifier (URI)**.
 
-Each resource should be **identifiable** via a **Uniform Resource Identifier (URI)**.
+> A **URI** is a string of characters that uniquely identifies a
+> resource, allowing clients to retrieve or manipulate it.
 
-> A **URI** is a string of characters that uniquely identifies a resource, allowing clients to retrieve or manipulate it. 
-
-::: {.aside}
-**Reference:**  
-Fielding, R., & Berners-Lee, T. (1998). *RFC 2396: Uniform Resource Identifiers (URI): Generic Syntax*.  
-[https://www.rfc-editor.org/rfc/rfc2396](https://www.rfc-editor.org/rfc/rfc2396)
+::: aside
+**Reference:**\
+Fielding, R., & Berners-Lee, T. (1998). *RFC 2396: Uniform Resource
+Identifiers (URI): Generic Syntax*.\
+<https://www.rfc-editor.org/rfc/rfc2396>
 :::
 
----
+------------------------------------------------------------------------
 
-## Resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate="true"}
 
-> A **URI** is a string of characters that **uniquely identifies a resource**, allowing clients to retrieve or manipulate it. 
+> A **URI** is a string of characters that **uniquely identifies a
+> resource**, allowing clients to retrieve or manipulate it.
 
-A typical URI can indicate **how to find or reference a resource** in two main ways:
+A typical URI can indicate **how to find or reference a resource** in
+two main ways:
 
----
+------------------------------------------------------------------------
 
-## Resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate="true"}
 
-> A **URI** is a string of characters that **uniquely identifies a resource**, allowing clients to retrieve or manipulate it. 
+> A **URI** is a string of characters that **uniquely identifies a
+> resource**, allowing clients to retrieve or manipulate it.
 
-- **URL (Uniform Resource Locator):** indicates **where and how to access** a resource.   To locate it: **scheme, authority (host/port), and path**.  
-The **query string**: optional and allows passing additional data to the resource.
+-   **URL (Uniform Resource Locator):** indicates **where and how to
+    access** a resource. To locate it: **scheme, authority (host/port),
+    and path**.\
+    The **query string**: optional and allows passing additional data to
+    the resource.
 
-
-::: {.fragment}
-**Example of a URL:**  
+::: fragment
+**Example of a URL:**\
 ![URL example](images/url.png)
 :::
 
----
+------------------------------------------------------------------------
 
-## Resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate="true"}
 
-> A **URI** is a string of characters that **uniquely identifies a resource**, allowing clients to retrieve or manipulate it. 
+> A **URI** is a string of characters that **uniquely identifies a
+> resource**, allowing clients to retrieve or manipulate it.
 
+-   **URN (Uniform Resource Name):** indicates the **resource by name**,
+    without specifying its location.
 
-- **URN (Uniform Resource Name):** indicates the **resource by name**, without specifying its location.  
-
-::: {.fragment}
-  **Example URN:** `urn:isbn:0451450523`  
+::: fragment
+**Example URN:** `urn:isbn:0451450523`
 :::
 
----
+------------------------------------------------------------------------
 
-## Resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate="true"}
 
-> A **URI** is a string of characters that **uniquely identifies a resource**, allowing clients to retrieve or manipulate it. 
+> A **URI** is a string of characters that **uniquely identifies a
+> resource**, allowing clients to retrieve or manipulate it.
 
 Some more practical examples of URIs:
-`https://en.wikipedia.org/wiki/Albert_Einstein` (URL)  
-`https://www.ncbi.nlm.nih.gov/gene/672` (URL)  
-`https://openlibrary.org/books/OL7353617M` (URL)  
-`urn:isbn:0451450523` (URN)  
-`urn:uuid:6e5f8a4a-3c57-11eb-adc1-0242ac120002` (URN)  
+`https://en.wikipedia.org/wiki/Albert_Einstein` (URL)\
+`https://www.ncbi.nlm.nih.gov/gene/672` (URL)\
+`https://openlibrary.org/books/OL7353617M` (URL)\
+`urn:isbn:0451450523` (URN)\
+`urn:uuid:6e5f8a4a-3c57-11eb-adc1-0242ac120002` (URN)
 
-
----
+------------------------------------------------------------------------
 
 ## Resource State in REST
 
-> A **resource state** defines which actions are currently allowed for a resource. 
+> A **resource state** defines which actions are currently allowed for a
+> resource.
 
-Each state permits a specific set of operations and actions may transition the resource to a new state
+Each state permits a specific set of operations and actions may
+transition the resource to a new state
 
-::: columns
+:::::: columns
 ::: column
-
 (e.g., *New → In Progress → Completed → Closed*).
 :::
 
-::: column
-
-<div class="center-figure">
-  ![](images/State-Diagram-Calls.png){width="80%"}
-</div>
+:::: column
+::: center-figure
+![](images/State-Diagram-Calls.png){width="80%"}
 :::
-:::
+::::
+::::::
 
----
+------------------------------------------------------------------------
 
-## Resource State in REST
+## HTTP Methods & Request/Response {auto-animate="true"}
 
-A **resource state** defines which actions are currently valid for a resource.  
-Each state enables a specific set of operations (e.g., *New → InProgress → Completed → Closed*).
+> **HTTP (HyperText Transfer Protocol)** is an application-level,
+> stateless protocol used for communication between clients and
+> servers.\
+> It allows clients to request resources identified by URIs and receive
+> representations of those resources in response.\
+> — RFC 2616, Abstract
+> ([datatracker.ietf.org](https://datatracker.ietf.org/doc/html/rfc2616.html))
 
-```json
-{
-  "id": 42,
-  "state": "InProgress",
-  "actions": ["complete", "close"]
-}
-````
----
+The HTTP has methods that allow to manipulate the state of resources:
 
-## HTTP Methods & Request/Response
+## HTTP Methods & Request/Response {auto-animate="true"}
 
-REST uses standard HTTP verbs:
+| Method | Purpose                     | Example                |
+|--------|-----------------------------|------------------------|
+| GET    | Retrieve the current state  | `GET /patients/123`    |
+| POST   | Create a new resource       | `POST /patients`       |
+| PUT    | Replace the resource state  | `PUT /patients/123`    |
+| PATCH  | Modify part of the resource | `PATCH /patients/123`  |
+| DELETE | Remove the resource         | `DELETE /patients/123` |
 
-- **GET** → retrieve  
-- **POST** → create  
-- **PUT** → update  
-- **DELETE** → delete  
+------------------------------------------------------------------------
 
-Example:
+## GET method {auto-animate="true"}
 
-**Request:**  
+The GET method is used to retrieve the **representation** of a resource
+in its current state.
+
+::::: columns
+::: {.column .fragment}
+**Client makes a Request:**\
 `GET /genes/BRCA1`
+:::
 
-**Response:**
+::: {.column .fragment}
+**Server gives a Response (JSON):**
 
-```json
+``` json
 {
   "gene": "BRCA1",
   "expression": 42.7,
   "unit": "TPM"
 }
 ```
+:::
+:::::
 
+::: frgament
+The client will receive this information from the server and can use it
+to display, process, or store the resource representation without
+modifying the resource itself.
+:::
+
+------------------------------------------------------------------------
+
+## POST method {auto-animate="true"}
+
+The POST method **creates a new resource**; the client’s representation is returned with the resource’s URI.
+
+::::: columns
+::: {.column .fragment}
+**Client makes a Request:**\
+`POST /genes`
+
+``` json
+{
+  "gene": "TP53",
+  "expression": 21.3,
+  "unit": "TPM"
+} 
+```
+:::
+
+::: {.column .fragment}
+**Server gives a Response (JSON):**
+
+``` json
+{
+  "status": "created",
+  "id": "TP53",
+  "location": "/genes/TP53"
+}
+```
+:::
+:::
+
+::: frgament
+The client receives confirmation and a representation of the newly created resource, which can be used to access or display it.
+:::
+
+------------------------------------------------------------------------
+
+## PUT method {auto-animate=true}
+
+The PUT method **updates or replaces an existing resource**, modifying the server state; the client’s representation is returned as confirmation.
+
+
+
+::::: columns
+::: {.column .fragment}
+**Client makes a Request:**  
+`PUT /genes/TP53`
+
+```json
+{
+  "gene": "TP53",
+  "expression": 25.0,
+  "unit": "TPM"
+}
+```
+:::
+
+::: {.column .fragment}
+**Server gives a Response (JSON):**
+
+``` json
+{
+  "status": "updated",
+  "gene": "TP53",
+  "expression": 25.0,
+  "unit": "TPM"
+}
+```
+:::
+:::
+
+::: frgament
+The client will receive this information from the server and can use it
+to display, process, or store the resource representation without
+modifying the resource itself.
+:::
+
+------------------------------------------------------------------------
+
+## DELETE method {auto-animate="true"}
+
+The DELETE method is used to **remove a resource**. It **modifies the server state** by deleting the resource. The server may return a confirmation or an empty response.
+
+
+::::: columns
+::: {.column .fragment}
+**Client makes a Request:**\
+`DELETE /genes/TP53`
+:::
+
+::: {.column .fragment}
+**Server gives a Response (JSON):**
+
+```json
+{
+  "status": "deleted",
+  "id": "TP53"
+}
+```
+:::
+:::::
+
+::: frgament
+The client receives confirmation that the resource has been deleted. The representation of the resource is no longer available.
+:::
+
+---
 
 # 2. Core Principles of REST
 
@@ -314,64 +457,62 @@ Example:
 
 REST = **Representational State Transfer**
 
-- **Representational**: send data as JSON/XML  
-- **State**: current information of a resource  
-- **Transfer**: exchanged via HTTP  
+-   **Representational**: send data as JSON/XML\
+-   **State**: current information of a resource\
+-   **Transfer**: exchanged via HTTP
 
-REST ensures:
-- consistent URLs  
-- predictable methods  
-- structured responses  
+REST ensures: - consistent URLs\
+- predictable methods\
+- structured responses
 
----
+------------------------------------------------------------------------
 
 ## What is an API (REST context)?
 
-An API defines:
-- **what requests clients can make**  
-- **how the server responds**  
-- **how to structure the request**  
+An API defines: - **what requests clients can make**\
+- **how the server responds**\
+- **how to structure the request**
 
 Examples:
 
-`GET /patients/123`  
-`POST /expression`  
+`GET /patients/123`\
+`POST /expression`
 
 APIs hide internal complexity and expose only the interface.
 
----
+------------------------------------------------------------------------
 
-## What is an API? {background-color=#ffe66d}
+## What is an API? {background-color="#ffe66d"}
 
 > **API (Application Programming Interface):**\
-> An API, or application programming interface, is a set of rules or protocols that enables software applications to communicate with each other to exchange data, features and functionality.[^1]
-
-
-Most of the API's use the client-server paradigm
+> An API, or application programming interface, is a set of rules or
+> protocols that enables software applications to communicate with each
+> other to exchange data, features and functionality.[^1]
 
 [^1]: IBM Cloud, "What is an API?" <https://www.ibm.com/topics/api>
 
----
+Most of the API's use the client-server paradigm
+
+------------------------------------------------------------------------
 
 ## Statelessness & Error Handling
 
-REST APIs are **stateless**:
-- each request contains all needed info  
-- server stores no session history  
+REST APIs are **stateless**: - each request contains all needed info\
+- server stores no session history
 
 This makes APIs scalable.
 
 Standard error codes:
 
-- **200 OK**  
-- **404 Not Found**  
-- **500 Internal Server Error**  
+-   **200 OK**\
+-   **404 Not Found**\
+-   **500 Internal Server Error**
 
----
+------------------------------------------------------------------------
 
 ## Error Example in plumber
 
-```r
+``` r
 #* @get /gene
 function(name = "BRCA1") {
   if (name == "") 
@@ -386,17 +527,16 @@ function(name = "BRCA1") {
 
 Clients can react automatically based on status.
 
-
-
 # 3. Building REST APIs with plumber
 
 ## What is plumber?
 
-`plumber` allows R functions to become API endpoints with simple annotations.
+`plumber` allows R functions to become API endpoints with simple
+annotations.
 
 Example:
 
-```r
+``` r
 #* @get /hello
 function() {
   list(message = "Hello World")
@@ -405,11 +545,11 @@ function() {
 
 A complete API with just one comment.
 
----
+------------------------------------------------------------------------
 
 ## Creating the First Endpoint
 
-```r
+``` r
 library(plumber)
 
 #* @get /hello
@@ -420,15 +560,15 @@ function() {
 
 Calling `/hello` returns:
 
-```json
+``` json
 {"message": "Hello World"}
 ```
 
----
+------------------------------------------------------------------------
 
 ## Handling Parameters
 
-```r
+``` r
 #* @get /gene
 function(name = "BRCA1") {
   list(
@@ -440,47 +580,42 @@ function(name = "BRCA1") {
 
 Calling `/gene?name=TP53` returns:
 
-```json
+``` json
 {"gene": "TP53", "expression": 57.2}
 ```
 
----
+------------------------------------------------------------------------
 
 ## Why REST APIs Are Crucial for Biomedical Informatics
 
 REST APIs allow:
 
-- interoperability  
-- reproducible pipelines  
-- automated workflows  
-- multi-language access (R, Python, dashboards…)
+-   interoperability\
+-   reproducible pipelines\
+-   automated workflows\
+-   multi-language access (R, Python, dashboards…)
 
-Without APIs → manual work & error-prone sharing  
-With APIs → safe and consistent data exchange  
-
-
+Without APIs → manual work & error-prone sharing\
+With APIs → safe and consistent data exchange
 
 # 4. Practical Gene Expression API
 
 ## Use Case
 
-Problem:
-Researchers need consistent access to gene expression data.
+Problem: Researchers need consistent access to gene expression data.
 
-Typical workflow:
-- spreadsheets  
-- copy/paste  
-- manual errors  
+Typical workflow: - spreadsheets\
+- copy/paste\
+- manual errors
 
-REST API workflow:
-`/expression?gene=BRCA1`  
+REST API workflow: `/expression?gene=BRCA1`\
 → clean, machine-readable, automatable.
 
----
+------------------------------------------------------------------------
 
 ## Building the API (GET)
 
-```r
+``` r
 library(plumber)
 
 #* @get /expression
@@ -492,11 +627,11 @@ function(gene = "BRCA1") {
 }
 ```
 
----
+------------------------------------------------------------------------
 
 ## Building the API (POST)
 
-```r
+``` r
 #* @post /expression
 function(gene, value) {
   list(
@@ -507,28 +642,28 @@ function(gene, value) {
 }
 ```
 
-GET = retrieve data  
-POST = submit new data  
+GET = retrieve data\
+POST = submit new data
 
----
+------------------------------------------------------------------------
 
 ## Testing the API
 
 Using curl:
 
-```bash
+``` bash
 curl "http://localhost:8000/expression?gene=TP53"
 ```
 
 Response:
 
-```json
+``` json
 {"gene":"TP53","expression":57.2}
 ```
 
 Testing ensures correctness, reproducibility and reliability.
 
----
+------------------------------------------------------------------------
 
 # 5. Discussion & Activity
 
@@ -536,38 +671,37 @@ Testing ensures correctness, reproducibility and reliability.
 
 FHIR is a REST-based standard for health data.
 
-FHIR defines:
-- resources like **Patient**, **Observation**, **Encounter**  
-- endpoints like `/Patient/123`  
+FHIR defines: - resources like **Patient**, **Observation**,
+**Encounter**\
+- endpoints like `/Patient/123`
 
 Built directly from REST principles.
 
----
+------------------------------------------------------------------------
 
 ## Class Activity
 
 Design an API endpoint:
 
-1. Define a biomedical use case  
-2. Create:
-   - URI  
-   - HTTP method  
-   - parameters  
-   - JSON response  
+1.  Define a biomedical use case\
+2.  Create:
+    -   URI\
+    -   HTTP method\
+    -   parameters\
+    -   JSON response
 
-Example topics:
-- drug interaction checker  
-- protein info lookup  
-- clinical trial search  
+Example topics: - drug interaction checker\
+- protein info lookup\
+- clinical trial search
 
----
+------------------------------------------------------------------------
 
 # Thank You!
 
 Questions?
 
-**References**  
-- Plumber: https://www.rplumber.io  
-- REST Tutorial: https://restfulapi.net  
-- FHIR: https://www.hl7.org/fhir/  
-- OpenFDA: https://open.fda.gov/apis/  
+**References**\
+- Plumber: https://www.rplumber.io\
+- REST Tutorial: https://restfulapi.net\
+- FHIR: https://www.hl7.org/fhir/\
+- OpenFDA: https://open.fda.gov/apis/
