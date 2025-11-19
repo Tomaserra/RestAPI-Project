@@ -71,7 +71,7 @@ This led to a **core problem**:
 ## {background-color="#e74c3c"}
 
 <div style="display:flex; height:100vh; justify-content:center; align-items:center; text-align:center; font-size:1.25em; font-weight:bold; color:white;">
-! Each program had to know the internal details of others — leading to high maintenance, fragile development pipelines, and incompatible systems !
+! Each program had to know the internal details of others - leading to high maintenance, fragile development pipelines, and incompatible systems !
 </div>
 
 
@@ -117,14 +117,21 @@ Most interactions on the internet follow:
 </div>
 :::
 
+> The client never interacts directly with raw data storage - only through an interface!
+:::
+
+---
+
+## Client–Server Paradigm {background-color=#E4FFF6}
+
 **Examples:**
 
 - Loading a webpage  
 - Querying a hospital database  
 - Retrieving sequencing results  
 
-The client never interacts directly with raw data storage — only through an interface.
-:::
+> The client never interacts directly with raw data storage - only through an interface!
+
 
 ## Client–Server in Biomedical Context
 
@@ -141,7 +148,7 @@ APIs allow secure, controlled, reproducible access.
 
 ---
 
-## resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate=true}
 
 The first explicit definition of a resource is found in RFC 2396, in August 1998:
 
@@ -155,7 +162,7 @@ Fielding, R., & Berners-Lee, T. (1998). *RFC 2396: Uniform Resource Identifiers 
 
 ---
 
-## resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate=true}
 
 > The **resource** is the **conceptual mapping to an entity or set of entities**, not necessarily the entity which corresponds to that mapping at any particular instance in time.
 
@@ -165,7 +172,7 @@ The **resource** itself remains the same, even if the data inside changes.
 
 ---
 
-## resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate=true}
 
 > The **resource** is the **conceptual mapping to an entity or set of entities**, not necessarily the entity which corresponds to that mapping at any particular instance in time.
 
@@ -175,7 +182,7 @@ In other words:
 
 ---
 
-## resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate=true}
 
 
 Each resource should be **identifiable** via a **Uniform Resource Identifier (URI)**.
@@ -190,7 +197,7 @@ Fielding, R., & Berners-Lee, T. (1998). *RFC 2396: Uniform Resource Identifiers 
 
 ---
 
-## resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate=true}
 
 > A **URI** is a string of characters that **uniquely identifies a resource**, allowing clients to retrieve or manipulate it. 
 
@@ -198,7 +205,7 @@ A typical URI can indicate **how to find or reference a resource** in two main w
 
 ---
 
-## resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate=true}
 
 > A **URI** is a string of characters that **uniquely identifies a resource**, allowing clients to retrieve or manipulate it. 
 
@@ -213,7 +220,7 @@ The **query string**: optional and allows passing additional data to the resourc
 
 ---
 
-## resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate=true}
 
 > A **URI** is a string of characters that **uniquely identifies a resource**, allowing clients to retrieve or manipulate it. 
 
@@ -226,7 +233,7 @@ The **query string**: optional and allows passing additional data to the resourc
 
 ---
 
-## resources and URIs {auto-animate=true}
+## Resources and URIs {auto-animate=true}
 
 > A **URI** is a string of characters that **uniquely identifies a resource**, allowing clients to retrieve or manipulate it. 
 
@@ -238,6 +245,42 @@ Some more practical examples of URIs:
 `urn:uuid:6e5f8a4a-3c57-11eb-adc1-0242ac120002` (URN)  
 
 
+---
+
+## Resource State in REST
+
+> A **resource state** defines which actions are currently allowed for a resource. 
+
+Each state permits a specific set of operations and actions may transition the resource to a new state
+
+::: columns
+::: column
+
+(e.g., *New → In Progress → Completed → Closed*).
+:::
+
+::: column
+
+<div class="center-figure">
+  ![](images/State-Diagram-Calls.png){width="80%"}
+</div>
+:::
+:::
+
+---
+
+## Resource State in REST
+
+A **resource state** defines which actions are currently valid for a resource.  
+Each state enables a specific set of operations (e.g., *New → InProgress → Completed → Closed*).
+
+```json
+{
+  "id": 42,
+  "state": "InProgress",
+  "actions": ["complete", "close"]
+}
+````
 ---
 
 ## HTTP Methods & Request/Response

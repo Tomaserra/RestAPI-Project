@@ -76,3 +76,32 @@ details>summary {
   padding-left: 1em;
   background: #ccddeb;
 }
+
+
+
+.reveal .fullscreen-center-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  text-align: center;
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 90%;
+
+  font-weight: 900;
+  line-height: 1.3;
+  word-wrap: break-word;
+  color: white;
+
+  /* Responsive scaling: never overflow */
+  font-size: clamp(1.2rem, 3vw, 2.6rem);
+}
+
+
+/* Allow long slides (especially with columns) to scroll instead of overflow */
+.reveal .slides section {
+  overflow-y: auto !important;
+}
+

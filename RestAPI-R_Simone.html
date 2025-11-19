@@ -96,7 +96,7 @@
     code span.vs { color: #bae67e; } /* VerbatimString */
     code span.wa { color: #f28779; } /* Warning */
   </style>
-  <link rel="stylesheet" href="RestAPI-R_Simone_files/libs/revealjs/dist/theme/quarto-e56c9a2b15bab9b942c6d7ea62357207.css">
+  <link rel="stylesheet" href="RestAPI-R_Simone_files/libs/revealjs/dist/theme/quarto-81df26f382513e0efd5d8a4056766a88.css">
   <link href="RestAPI-R_Simone_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="RestAPI-R_Simone_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="RestAPI-R_Simone_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -275,7 +275,7 @@ Marco, Tomás Serra, Simone
 <section id="section" class="slide level2" data-background-color="#e74c3c">
 <h2></h2>
 <div style="display:flex; height:100vh; justify-content:center; align-items:center; text-align:center; font-size:1.25em; font-weight:bold; color:white;">
-<p>! Each program had to know the internal details of others — leading to high maintenance, fragile development pipelines, and incompatible systems !</p>
+<p>! Each program had to know the internal details of others - leading to high maintenance, fragile development pipelines, and incompatible systems !</p>
 </div>
 </section>
 <section id="section-1" class="slide level2" data-background-color="#27ae60">
@@ -317,14 +317,24 @@ Marco, Tomás Serra, Simone
 <div style="text-align: center;">
 <p><img src="images/Client-Server-Model.png" alt="API Restaurant Metaphor" style="width: 90%; max-height: 80vh; object-fit: contain; border-radius: 8px;"></p>
 </div>
-</div><p><strong>Examples:</strong></p><ul>
+</div><blockquote>
+<p>The client never interacts directly with raw data storage - only through an interface!</p>
+</blockquote>
+</div>
+</section>
+<section id="clientserver-paradigm-1" class="slide level2" data-background-color="#E4FFF6">
+<h2>Client–Server Paradigm</h2>
+<p><strong>Examples:</strong></p>
+<ul>
 <li>Loading a webpage<br>
 </li>
 <li>Querying a hospital database<br>
 </li>
 <li>Retrieving sequencing results</li>
-</ul><p>The client never interacts directly with raw data storage — only through an interface.</p>
-</div>
+</ul>
+<blockquote>
+<p>The client never interacts directly with raw data storage - only through an interface!</p>
+</blockquote>
 </section>
 <section id="clientserver-in-biomedical-context" class="slide level2">
 <h2>Client–Server in Biomedical Context</h2>
@@ -341,7 +351,7 @@ Server = hospital system, cloud service, or research database</p>
 <p>APIs allow secure, controlled, reproducible access.</p>
 </section>
 <section id="resources-and-uris" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">resources and URIs</h2>
+<h2 data-id="quarto-animate-title">Resources and URIs</h2>
 <p>The first explicit definition of a resource is found in RFC 2396, in August 1998:</p>
 <blockquote>
 <p>The resource is the conceptual mapping to an entity or set of entities, not necessarily the entity which corresponds to that mapping at any particular instance in time.</p>
@@ -353,7 +363,7 @@ Fielding, R., &amp; Berners-Lee, T. (1998). <em>RFC 2396: Uniform Resource Ident
 <a href="https://www.rfc-editor.org/rfc/rfc2396">https://www.rfc-editor.org/rfc/rfc2396</a></p>
 </div></aside></section>
 <section id="resources-and-uris-1" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">resources and URIs</h2>
+<h2 data-id="quarto-animate-title">Resources and URIs</h2>
 <blockquote>
 <p>The <strong>resource</strong> is the <strong>conceptual mapping to an entity or set of entities</strong>, not necessarily the entity which corresponds to that mapping at any particular instance in time.</p>
 </blockquote>
@@ -362,7 +372,7 @@ We can have a file <code>Report.pdf</code> at the beginning, and its content mig
 The <strong>resource</strong> itself remains the same, even if the data inside changes.</p>
 </section>
 <section id="resources-and-uris-2" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">resources and URIs</h2>
+<h2 data-id="quarto-animate-title">Resources and URIs</h2>
 <blockquote>
 <p>The <strong>resource</strong> is the <strong>conceptual mapping to an entity or set of entities</strong>, not necessarily the entity which corresponds to that mapping at any particular instance in time.</p>
 </blockquote>
@@ -371,7 +381,7 @@ The <strong>resource</strong> itself remains the same, even if the data inside c
 - The <strong>entity</strong> is the <strong>real object</strong> or concrete data behind it.</p>
 </section>
 <section id="resources-and-uris-3" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">resources and URIs</h2>
+<h2 data-id="quarto-animate-title">Resources and URIs</h2>
 <p>Each resource should be <strong>identifiable</strong> via a <strong>Uniform Resource Identifier (URI)</strong>.</p>
 <blockquote>
 <p>A <strong>URI</strong> is a string of characters that uniquely identifies a resource, allowing clients to retrieve or manipulate it.</p>
@@ -383,14 +393,14 @@ Fielding, R., &amp; Berners-Lee, T. (1998). <em>RFC 2396: Uniform Resource Ident
 <a href="https://www.rfc-editor.org/rfc/rfc2396">https://www.rfc-editor.org/rfc/rfc2396</a></p>
 </div></aside></section>
 <section id="resources-and-uris-4" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">resources and URIs</h2>
+<h2 data-id="quarto-animate-title">Resources and URIs</h2>
 <blockquote>
 <p>A <strong>URI</strong> is a string of characters that <strong>uniquely identifies a resource</strong>, allowing clients to retrieve or manipulate it.</p>
 </blockquote>
 <p>A typical URI can indicate <strong>how to find or reference a resource</strong> in two main ways:</p>
 </section>
 <section id="resources-and-uris-5" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">resources and URIs</h2>
+<h2 data-id="quarto-animate-title">Resources and URIs</h2>
 <blockquote>
 <p>A <strong>URI</strong> is a string of characters that <strong>uniquely identifies a resource</strong>, allowing clients to retrieve or manipulate it.</p>
 </blockquote>
@@ -404,7 +414,7 @@ The <strong>query string</strong>: optional and allows passing additional data t
 </div>
 </section>
 <section id="resources-and-uris-6" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">resources and URIs</h2>
+<h2 data-id="quarto-animate-title">Resources and URIs</h2>
 <blockquote>
 <p>A <strong>URI</strong> is a string of characters that <strong>uniquely identifies a resource</strong>, allowing clients to retrieve or manipulate it.</p>
 </blockquote>
@@ -416,7 +426,7 @@ The <strong>query string</strong>: optional and allows passing additional data t
 </div>
 </section>
 <section id="resources-and-uris-7" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">resources and URIs</h2>
+<h2 data-id="quarto-animate-title">Resources and URIs</h2>
 <blockquote>
 <p>A <strong>URI</strong> is a string of characters that <strong>uniquely identifies a resource</strong>, allowing clients to retrieve or manipulate it.</p>
 </blockquote>
@@ -425,6 +435,31 @@ The <strong>query string</strong>: optional and allows passing additional data t
 <code>https://openlibrary.org/books/OL7353617M</code> (URL)<br>
 <code>urn:isbn:0451450523</code> (URN)<br>
 <code>urn:uuid:6e5f8a4a-3c57-11eb-adc1-0242ac120002</code> (URN)</p>
+</section>
+<section id="resource-state-in-rest" class="slide level2">
+<h2>Resource State in REST</h2>
+<blockquote>
+<p>A <strong>resource state</strong> defines which actions are currently allowed for a resource.</p>
+</blockquote>
+<p>Each state permits a specific set of operations and actions may transition the resource to a new state</p>
+<div class="columns">
+<div class="column">
+<p>(e.g., <em>New → In Progress → Completed → Closed</em>).</p>
+</div><div class="column">
+<div class="center-figure">
+<p><img data-src="images/State-Diagram-Calls.png" style="width:80.0%"></p>
+</div>
+</div></div>
+</section>
+<section id="resource-state-in-rest-1" class="slide level2">
+<h2>Resource State in REST</h2>
+<p>A <strong>resource state</strong> defines which actions are currently valid for a resource.<br>
+Each state enables a specific set of operations (e.g., <em>New → InProgress → Completed → Closed</em>).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href=""></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href=""></a>  <span class="dt">"id"</span><span class="fu">:</span> <span class="dv">42</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href=""></a>  <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"InProgress"</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href=""></a>  <span class="dt">"actions"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"complete"</span><span class="ot">,</span> <span class="st">"close"</span><span class="ot">]</span></span>
+<span id="cb1-5"><a href=""></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="http-methods-requestresponse" class="slide level2">
 <h2>HTTP Methods &amp; Request/Response</h2>
@@ -442,11 +477,11 @@ The <strong>query string</strong>: optional and allows passing additional data t
 <p><strong>Request:</strong><br>
 <code>GET /genes/BRCA1</code></p>
 <p><strong>Response:</strong></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href=""></a><span class="fu">{</span></span>
-<span id="cb1-2"><a href=""></a>  <span class="dt">"gene"</span><span class="fu">:</span> <span class="st">"BRCA1"</span><span class="fu">,</span></span>
-<span id="cb1-3"><a href=""></a>  <span class="dt">"expression"</span><span class="fu">:</span> <span class="fl">42.7</span><span class="fu">,</span></span>
-<span id="cb1-4"><a href=""></a>  <span class="dt">"unit"</span><span class="fu">:</span> <span class="st">"TPM"</span></span>
-<span id="cb1-5"><a href=""></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href=""></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href=""></a>  <span class="dt">"gene"</span><span class="fu">:</span> <span class="st">"BRCA1"</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href=""></a>  <span class="dt">"expression"</span><span class="fu">:</span> <span class="fl">42.7</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href=""></a>  <span class="dt">"unit"</span><span class="fu">:</span> <span class="st">"TPM"</span></span>
+<span id="cb2-5"><a href=""></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section></section>
 <section>
 <section id="core-principles-of-rest" class="title-slide slide level1 center">
@@ -501,16 +536,16 @@ An API, or application programming interface, is a set of rules or protocols tha
 </section>
 <section id="error-example-in-plumber" class="slide level2">
 <h2>Error Example in plumber</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="co">#* @get /gene</span></span>
-<span id="cb2-2"><a href=""></a><span class="cf">function</span>(<span class="at">name =</span> <span class="st">"BRCA1"</span>) {</span>
-<span id="cb2-3"><a href=""></a>  <span class="cf">if</span> (name <span class="sc">==</span> <span class="st">""</span>) </span>
-<span id="cb2-4"><a href=""></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">error =</span> <span class="st">"No gene provided"</span>, <span class="at">status =</span> <span class="dv">400</span>))</span>
-<span id="cb2-5"><a href=""></a></span>
-<span id="cb2-6"><a href=""></a>  <span class="fu">list</span>(</span>
-<span id="cb2-7"><a href=""></a>    <span class="at">gene =</span> name,</span>
-<span id="cb2-8"><a href=""></a>    <span class="at">expression =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">100</span>)</span>
-<span id="cb2-9"><a href=""></a>  )</span>
-<span id="cb2-10"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="co">#* @get /gene</span></span>
+<span id="cb3-2"><a href=""></a><span class="cf">function</span>(<span class="at">name =</span> <span class="st">"BRCA1"</span>) {</span>
+<span id="cb3-3"><a href=""></a>  <span class="cf">if</span> (name <span class="sc">==</span> <span class="st">""</span>) </span>
+<span id="cb3-4"><a href=""></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">error =</span> <span class="st">"No gene provided"</span>, <span class="at">status =</span> <span class="dv">400</span>))</span>
+<span id="cb3-5"><a href=""></a></span>
+<span id="cb3-6"><a href=""></a>  <span class="fu">list</span>(</span>
+<span id="cb3-7"><a href=""></a>    <span class="at">gene =</span> name,</span>
+<span id="cb3-8"><a href=""></a>    <span class="at">expression =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb3-9"><a href=""></a>  )</span>
+<span id="cb3-10"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Clients can react automatically based on status.</p>
 </section></section>
 <section>
@@ -522,34 +557,34 @@ An API, or application programming interface, is a set of rules or protocols tha
 <h2>What is plumber?</h2>
 <p><code>plumber</code> allows R functions to become API endpoints with simple annotations.</p>
 <p>Example:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="co">#* @get /hello</span></span>
-<span id="cb3-2"><a href=""></a><span class="cf">function</span>() {</span>
-<span id="cb3-3"><a href=""></a>  <span class="fu">list</span>(<span class="at">message =</span> <span class="st">"Hello World"</span>)</span>
-<span id="cb3-4"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="co">#* @get /hello</span></span>
+<span id="cb4-2"><a href=""></a><span class="cf">function</span>() {</span>
+<span id="cb4-3"><a href=""></a>  <span class="fu">list</span>(<span class="at">message =</span> <span class="st">"Hello World"</span>)</span>
+<span id="cb4-4"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>A complete API with just one comment.</p>
 </section>
 <section id="creating-the-first-endpoint" class="slide level2">
 <h2>Creating the First Endpoint</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">library</span>(plumber)</span>
-<span id="cb4-2"><a href=""></a></span>
-<span id="cb4-3"><a href=""></a><span class="co">#* @get /hello</span></span>
-<span id="cb4-4"><a href=""></a><span class="cf">function</span>() {</span>
-<span id="cb4-5"><a href=""></a>  <span class="fu">list</span>(<span class="at">message =</span> <span class="st">"Hello World"</span>)</span>
-<span id="cb4-6"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">library</span>(plumber)</span>
+<span id="cb5-2"><a href=""></a></span>
+<span id="cb5-3"><a href=""></a><span class="co">#* @get /hello</span></span>
+<span id="cb5-4"><a href=""></a><span class="cf">function</span>() {</span>
+<span id="cb5-5"><a href=""></a>  <span class="fu">list</span>(<span class="at">message =</span> <span class="st">"Hello World"</span>)</span>
+<span id="cb5-6"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Calling <code>/hello</code> returns:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb5-1"><a href=""></a><span class="fu">{</span><span class="dt">"message"</span><span class="fu">:</span> <span class="st">"Hello World"</span><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb6-1"><a href=""></a><span class="fu">{</span><span class="dt">"message"</span><span class="fu">:</span> <span class="st">"Hello World"</span><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="handling-parameters" class="slide level2">
 <h2>Handling Parameters</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="co">#* @get /gene</span></span>
-<span id="cb6-2"><a href=""></a><span class="cf">function</span>(<span class="at">name =</span> <span class="st">"BRCA1"</span>) {</span>
-<span id="cb6-3"><a href=""></a>  <span class="fu">list</span>(</span>
-<span id="cb6-4"><a href=""></a>    <span class="at">gene =</span> name,</span>
-<span id="cb6-5"><a href=""></a>    <span class="at">expression =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">100</span>)</span>
-<span id="cb6-6"><a href=""></a>  )</span>
-<span id="cb6-7"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co">#* @get /gene</span></span>
+<span id="cb7-2"><a href=""></a><span class="cf">function</span>(<span class="at">name =</span> <span class="st">"BRCA1"</span>) {</span>
+<span id="cb7-3"><a href=""></a>  <span class="fu">list</span>(</span>
+<span id="cb7-4"><a href=""></a>    <span class="at">gene =</span> name,</span>
+<span id="cb7-5"><a href=""></a>    <span class="at">expression =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb7-6"><a href=""></a>  )</span>
+<span id="cb7-7"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Calling <code>/gene?name=TP53</code> returns:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a href=""></a><span class="fu">{</span><span class="dt">"gene"</span><span class="fu">:</span> <span class="st">"TP53"</span><span class="fu">,</span> <span class="dt">"expression"</span><span class="fu">:</span> <span class="fl">57.2</span><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a href=""></a><span class="fu">{</span><span class="dt">"gene"</span><span class="fu">:</span> <span class="st">"TP53"</span><span class="fu">,</span> <span class="dt">"expression"</span><span class="fu">:</span> <span class="fl">57.2</span><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="why-rest-apis-are-crucial-for-biomedical-informatics" class="slide level2">
 <h2>Why REST APIs Are Crucial for Biomedical Informatics</h2>
@@ -582,35 +617,35 @@ With APIs → safe and consistent data exchange</p>
 </section>
 <section id="building-the-api-get" class="slide level2">
 <h2>Building the API (GET)</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">library</span>(plumber)</span>
-<span id="cb8-2"><a href=""></a></span>
-<span id="cb8-3"><a href=""></a><span class="co">#* @get /expression</span></span>
-<span id="cb8-4"><a href=""></a><span class="cf">function</span>(<span class="at">gene =</span> <span class="st">"BRCA1"</span>) {</span>
-<span id="cb8-5"><a href=""></a>  <span class="fu">list</span>(</span>
-<span id="cb8-6"><a href=""></a>    <span class="at">gene =</span> gene,</span>
-<span id="cb8-7"><a href=""></a>    <span class="at">expression =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">100</span>)</span>
-<span id="cb8-8"><a href=""></a>  )</span>
-<span id="cb8-9"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">library</span>(plumber)</span>
+<span id="cb9-2"><a href=""></a></span>
+<span id="cb9-3"><a href=""></a><span class="co">#* @get /expression</span></span>
+<span id="cb9-4"><a href=""></a><span class="cf">function</span>(<span class="at">gene =</span> <span class="st">"BRCA1"</span>) {</span>
+<span id="cb9-5"><a href=""></a>  <span class="fu">list</span>(</span>
+<span id="cb9-6"><a href=""></a>    <span class="at">gene =</span> gene,</span>
+<span id="cb9-7"><a href=""></a>    <span class="at">expression =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb9-8"><a href=""></a>  )</span>
+<span id="cb9-9"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="building-the-api-post" class="slide level2">
 <h2>Building the API (POST)</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co">#* @post /expression</span></span>
-<span id="cb9-2"><a href=""></a><span class="cf">function</span>(gene, value) {</span>
-<span id="cb9-3"><a href=""></a>  <span class="fu">list</span>(</span>
-<span id="cb9-4"><a href=""></a>    <span class="at">status =</span> <span class="st">"success"</span>,</span>
-<span id="cb9-5"><a href=""></a>    <span class="at">gene =</span> gene,</span>
-<span id="cb9-6"><a href=""></a>    <span class="at">value =</span> value</span>
-<span id="cb9-7"><a href=""></a>  )</span>
-<span id="cb9-8"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="co">#* @post /expression</span></span>
+<span id="cb10-2"><a href=""></a><span class="cf">function</span>(gene, value) {</span>
+<span id="cb10-3"><a href=""></a>  <span class="fu">list</span>(</span>
+<span id="cb10-4"><a href=""></a>    <span class="at">status =</span> <span class="st">"success"</span>,</span>
+<span id="cb10-5"><a href=""></a>    <span class="at">gene =</span> gene,</span>
+<span id="cb10-6"><a href=""></a>    <span class="at">value =</span> value</span>
+<span id="cb10-7"><a href=""></a>  )</span>
+<span id="cb10-8"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>GET = retrieve data<br>
 POST = submit new data</p>
 </section>
 <section id="testing-the-api" class="slide level2">
 <h2>Testing the API</h2>
 <p>Using curl:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href=""></a><span class="ex">curl</span> <span class="st">"http://localhost:8000/expression?gene=TP53"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href=""></a><span class="ex">curl</span> <span class="st">"http://localhost:8000/expression?gene=TP53"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Response:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb11-1"><a href=""></a><span class="fu">{</span><span class="dt">"gene"</span><span class="fu">:</span><span class="st">"TP53"</span><span class="fu">,</span><span class="dt">"expression"</span><span class="fu">:</span><span class="fl">57.2</span><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb12-1"><a href=""></a><span class="fu">{</span><span class="dt">"gene"</span><span class="fu">:</span><span class="st">"TP53"</span><span class="fu">,</span><span class="dt">"expression"</span><span class="fu">:</span><span class="fl">57.2</span><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Testing ensures correctness, reproducibility and reliability.</p>
 </section>
 <section class="slide level2">
