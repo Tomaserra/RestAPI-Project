@@ -65,13 +65,24 @@ Imagine you’re in a restaurant placing an order.
 
 This led to a **core problem**:
 
---- 
-
-<div style="color:#e74c3c; font-size:1.5em; text-align:center; font-weight:bold; line-height:1.5em; margin:2em 0;"> ❗ Each program had to know the internal details of others — leading to high maintenance, fragile development pipelines, and incompatible systems. ❗ </div>
 
 --- 
 
-<div style="color:#27ae60; font-size:1.5em; text-align:center; font-weight:bold; line-height:1.5em; margin:2em 0;"> APIs: Standardized interfaces for predictable, scalable, and reliable communication </div> 
+## {background-color="#e74c3c"}
+
+<div style="display:flex; height:100vh; justify-content:center; align-items:center; text-align:center; font-size:1.25em; font-weight:bold; color:white;">
+! Each program had to know the internal details of others — leading to high maintenance, fragile development pipelines, and incompatible systems !
+</div>
+
+
+---
+
+## {background-color="#27ae60"}
+
+<div style="display:flex; height:100vh; justify-content:center; align-items:center; text-align:center; font-size:1.25em; font-weight:bold; color:white;">
+APIs: Standardized interfaces for predictable, scalable, and reliable communication !
+</div>
+
 
 --- 
 
